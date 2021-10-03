@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.SignalR;
+using CRUD_React_NET_Core_Web_API_Dapper_SignalR.Hubs;
 
 namespace CRUD_React_NET_Core_Web_API_Dapper_SignalR.Controllers
 {
@@ -15,21 +17,25 @@ namespace CRUD_React_NET_Core_Web_API_Dapper_SignalR.Controllers
     {
 
         private readonly EmployeeRepository employeeRepository;
+        private readonly IHubContext<EmployeeHub> _employeeHub;
 
-        public EmployeeController()
+        public EmployeeController(IHubContext<EmployeeHub> employeeHub)
         {
             employeeRepository = new EmployeeRepository();
+            _employeeHub = employeeHub;
         }
 
         [HttpPost("employee")]
-        public IActionResult CreateEmployee([FromBody] Employee employee)
+        public async Task<IActionResult> CreateEmployee([FromBody] Employee employee)
         {
             employeeRepository.CreateEmployee(employee);
+            var employees = employeeRepository.GetEmployees();
+            await _employeeHub.Clients.All.SendAsync("FetchLatestEmployees","Create", employees);
             return Ok("Employee created");
         }
 
         [HttpGet("employees")]
-        public IActionResult GetEmployees()
+        public  IActionResult GetEmployees()
         {
             var employees = employeeRepository.GetEmployees();
             return Ok(employees);
@@ -43,16 +49,19 @@ namespace CRUD_React_NET_Core_Web_API_Dapper_SignalR.Controllers
         }
 
         [HttpPut("employee")]
-        public IActionResult UpdateEmployee([FromBody] Employee employee)
+        public async Task<IActionResult> UpdateEmployee([FromBody] Employee employee)
         {
             employeeRepository.UpdateEmployee(employee);
+            await _employeeHub.Clients.All.SendAsync("FetchLatestEmployees","Update", employee);
             return Ok("Employee record updated");
         }
 
         [HttpDelete("employee/{id}")]
-        public IActionResult DeleteEmployee(int id)
+        public async Task<IActionResult> DeleteEmployee(int id)
         {
             employeeRepository.DeleteEmployee(id);
+            var employees = employeeRepository.GetEmployees();
+            await _employeeHub.Clients.All.SendAsync("FetchLatestEmployees","Delete", employees);
             return Ok("Employee record deleted");
         }
     }

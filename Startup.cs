@@ -26,6 +26,11 @@ namespace CRUD_React_NET_Core_Web_API_Dapper_SignalR
 
             services.AddSignalR();
 
+            //services.AddControllers().AddJsonOptions(options =>
+            //{
+            //    options.JsonSerializerOptions.PropertyNamingPolicy = null;
+            //});
+
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {

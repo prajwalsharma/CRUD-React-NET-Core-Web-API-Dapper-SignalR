@@ -38,7 +38,6 @@ const Create = () => {
       .post("https://localhost:44346/api/employee", employeeData)
       .then((response) => {
         if (response.status === 200) {
-          alert("Employee saved!");
           history.push("fetch-data");
         }
       })
