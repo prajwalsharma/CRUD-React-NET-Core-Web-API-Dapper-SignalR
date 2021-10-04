@@ -75,19 +75,12 @@ const Edit = (props) => {
       .then((response) => {
         if (response.status === 200) {
           fetchCurrentEmployee(props.match.params.id);
-          alert("Employee record updated!");
           history.push("/fetch-data");
         }
       })
       .catch((error) => {
         alert(error.message);
       });
-
-    // Clear the form
-    setName("");
-    setCity("");
-    setDepartment("");
-    setGender("");
   };
 
   return (

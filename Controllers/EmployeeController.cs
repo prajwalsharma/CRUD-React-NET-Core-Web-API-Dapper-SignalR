@@ -30,7 +30,7 @@ namespace CRUD_React_NET_Core_Web_API_Dapper_SignalR.Controllers
         {
             employeeRepository.CreateEmployee(employee);
             var employees = employeeRepository.GetEmployees();
-            await _employeeHub.Clients.All.SendAsync("FetchLatestEmployees","Create", employees);
+            await _employeeHub.Clients.All.SendAsync("FetchLatestEmployees");
             return Ok("Employee created");
         }
 
@@ -52,7 +52,7 @@ namespace CRUD_React_NET_Core_Web_API_Dapper_SignalR.Controllers
         public async Task<IActionResult> UpdateEmployee([FromBody] Employee employee)
         {
             employeeRepository.UpdateEmployee(employee);
-            await _employeeHub.Clients.All.SendAsync("FetchLatestEmployees","Update", employee);
+            await _employeeHub.Clients.All.SendAsync("FetchLatestEmployees");
             return Ok("Employee record updated");
         }
 
@@ -61,7 +61,7 @@ namespace CRUD_React_NET_Core_Web_API_Dapper_SignalR.Controllers
         {
             employeeRepository.DeleteEmployee(id);
             var employees = employeeRepository.GetEmployees();
-            await _employeeHub.Clients.All.SendAsync("FetchLatestEmployees","Delete", employees);
+            await _employeeHub.Clients.All.SendAsync("FetchLatestEmployees");
             return Ok("Employee record deleted");
         }
     }

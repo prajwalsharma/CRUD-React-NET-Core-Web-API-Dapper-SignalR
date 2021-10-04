@@ -44,12 +44,6 @@ const Create = () => {
       .catch((error) => {
         alert(error.message);
       });
-
-    // Clear the form
-    setName("");
-    setCity("");
-    setDepartment("");
-    setGender("");
   };
 
   return (
