@@ -1,4 +1,5 @@
 using CRUD_React_NET_Core_Web_API_Dapper_SignalR.Hubs;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -21,6 +22,9 @@ namespace CRUD_React_NET_Core_Web_API_Dapper_SignalR
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie();
 
             services.AddControllersWithViews();
 
@@ -57,6 +61,9 @@ namespace CRUD_React_NET_Core_Web_API_Dapper_SignalR
             app.UseSpaStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

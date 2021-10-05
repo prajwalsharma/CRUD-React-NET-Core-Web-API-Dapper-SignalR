@@ -7,21 +7,24 @@ import { FetchData } from "./components/FetchData";
 import "./custom.css";
 import Create from "./components/Create";
 import Edit from "./components/Edit";
+import Login from "./components/Login";
 
 export default class App extends Component {
   static displayName = App.name;
 
   render() {
     return (
-      <Layout>
+      <>
         <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/fetch-data" component={FetchData} />
-          <Route path="/create" component={Create} />
-          <Route path="/edit/:id" component={Edit} />
-          <Route path="*" component={Home} />
+          <Route path="/login" component={Login} />
+          <Layout>
+            <Route exact path="/" component={Home} />
+            <Route path="/fetch-data" component={FetchData} />
+            <Route path="/create" component={Create} />
+            <Route path="/edit/:id" component={Edit} />
+          </Layout>
         </Switch>
-      </Layout>
+      </>
     );
   }
 }

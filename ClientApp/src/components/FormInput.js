@@ -5,6 +5,7 @@ const FormInput = ({ label, value, onchange }) => {
     <div className="form-group">
       <label>{label}: </label>
       <input
+        required
         type="text"
         className="form-control"
         value={value}

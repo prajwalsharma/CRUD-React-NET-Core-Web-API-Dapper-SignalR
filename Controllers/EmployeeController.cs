@@ -8,9 +8,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using CRUD_React_NET_Core_Web_API_Dapper_SignalR.Hubs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CRUD_React_NET_Core_Web_API_Dapper_SignalR.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api")]
     public class EmployeeController : ControllerBase
@@ -28,9 +30,12 @@ namespace CRUD_React_NET_Core_Web_API_Dapper_SignalR.Controllers
         [HttpPost("employee")]
         public async Task<IActionResult> CreateEmployee([FromBody] Employee employee)
         {
+            var user = HttpContext.User.Identity.Name;
+
             employeeRepository.CreateEmployee(employee);
             var employees = employeeRepository.GetEmployees();
             await _employeeHub.Clients.All.SendAsync("FetchLatestEmployees");
+            //await _employeeHub.Clients.Client("e9ANipZPTfKecheOb3hI7Q").SendAsync("FetchLatestEmployees");
             return Ok("Employee created");
         }
 

@@ -6,6 +6,7 @@ import * as signalR from "@microsoft/signalr";
 export const FetchData = () => {
   const [employees, setemployees] = useState();
   const [loading, setLoading] = useState(true);
+  const [connectionid, setConnectionid] = useState();
 
   // Set Hub connection on start
   useEffect(() => {
@@ -18,6 +19,7 @@ export const FetchData = () => {
     // 2. Start the connection
     connection.start().then(() => {
       console.log("Connection Established...");
+      setConnectionid(connection.connection.connectionId);
       axios
         .get("api/employees")
         .then((res) => {
@@ -76,6 +78,7 @@ export const FetchData = () => {
           className="table table-striped table-bordered"
           aria-labelledby="tabelLabel"
         >
+          {connectionid && <caption>Connection_Id: {connectionid}</caption>}
           <thead>
             <tr>
               <th>Name</th>
