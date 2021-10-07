@@ -29,7 +29,10 @@ namespace CRUD_React_NET_Core_Web_API_Dapper_SignalR.Controllers
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
-            return Ok();
+            // If valid user, generate a fake token for client auth
+            var fakeToken = Guid.NewGuid().ToString();
+
+            return Ok(new { token = fakeToken });
         }
 
         [Authorize]

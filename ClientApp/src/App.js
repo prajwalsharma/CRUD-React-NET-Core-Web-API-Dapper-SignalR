@@ -8,6 +8,8 @@ import "./custom.css";
 import Create from "./components/Create";
 import Edit from "./components/Edit";
 import Login from "./components/Login";
+import Logout from "./components/Logout";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 export default class App extends Component {
   static displayName = App.name;
@@ -16,12 +18,14 @@ export default class App extends Component {
     return (
       <>
         <Switch>
+          <Route exact path="/" component={Login} />
           <Route path="/login" component={Login} />
+          <Route path="/logout" component={Logout} />
           <Layout>
-            <Route exact path="/" component={Home} />
-            <Route path="/fetch-data" component={FetchData} />
-            <Route path="/create" component={Create} />
-            <Route path="/edit/:id" component={Edit} />
+            <ProtectedRoute path="/home" component={Home} />
+            <ProtectedRoute path="/fetch-data" component={FetchData} />
+            <ProtectedRoute path="/create" component={Create} />
+            <ProtectedRoute path="/edit/:id" component={Edit} />
           </Layout>
         </Switch>
       </>

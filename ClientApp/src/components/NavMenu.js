@@ -30,6 +30,8 @@ export class NavMenu extends Component {
   }
 
   render() {
+    const isAuthenticated = localStorage.getItem("token");
+
     return (
       <header>
         <Navbar
@@ -48,7 +50,7 @@ export class NavMenu extends Component {
             >
               <ul className="navbar-nav flex-grow">
                 <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/">
+                  <NavLink tag={Link} className="text-dark" to="/home">
                     Home
                   </NavLink>
                 </NavItem>
@@ -62,16 +64,13 @@ export class NavMenu extends Component {
                     Create
                   </NavLink>
                 </NavItem>
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/login">
-                    Login
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/login">
-                    Logout
-                  </NavLink>
-                </NavItem>
+                {isAuthenticated && (
+                  <NavItem>
+                    <NavLink tag={Link} className="text-dark" to="/logout">
+                      Logout
+                    </NavLink>
+                  </NavItem>
+                )}
               </ul>
             </Collapse>
           </Container>

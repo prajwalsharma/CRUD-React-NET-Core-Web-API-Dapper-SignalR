@@ -23,7 +23,8 @@ const Login = () => {
     axios
       .post("auth/login", data)
       .then((res) => {
-        history.push("/");
+        localStorage.setItem("token", res.data.token);
+        history.push("home");
       })
       .catch((err) => alert(err.message));
   };
