@@ -10,25 +10,19 @@ const Chat = () => {
       .build();
 
     // 1. Start the connection
-    chatConnection.start();
+    chatConnection.start().then(() => {
+      console.log("Chat connection started...");
+      chatConnection.invoke("GetOnlineUsers");
+    });
 
     if (chatConnection) {
-      chatConnection.on("UserConnected", (connectionType, username) => {
-        if (connectionType === "Connect") {
-          OnlineUsers.push(username);
-          setOnlineUsers([...OnlineUsers]);
-          console.log(OnlineUsers);
-          console.log(username + " joined...");
-        } else {
-          const index = OnlineUsers.indexOf(username);
+      chatConnection.on("UserConnected", (users) => {
+        setOnlineUsers(users);
+        console.log(users);
+      });
 
-          if (index > -1) {
-            OnlineUsers.splice(index, 1);
-            setOnlineUsers([...OnlineUsers]);
-            console.log(OnlineUsers);
-            console.log(username + " left...");
-          }
-        }
+      chatConnection.on("GetOnlineUsersClient", (onlineUsers) => {
+        console.log(onlineUsers);
       });
     }
 
@@ -47,9 +41,8 @@ const Chat = () => {
       <div>
         <ul>
           {OnlineUsers &&
-            OnlineUsers.length > 0 &&
-            OnlineUsers.map((u) => {
-              return <li>{u}</li>;
+            OnlineUsers.map((user) => {
+              return <li>{user.Username}</li>;
             })}
         </ul>
       </div>
