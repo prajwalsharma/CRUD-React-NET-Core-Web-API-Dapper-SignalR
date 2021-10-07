@@ -1,5 +1,4 @@
 import axios from "axios";
-import { User } from "oidc-client";
 import React from "react";
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";

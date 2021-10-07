@@ -49,27 +49,38 @@ export class NavMenu extends Component {
               navbar
             >
               <ul className="navbar-nav flex-grow">
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/home">
-                    Home
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/fetch-data">
-                    Fetch
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/create">
-                    Create
-                  </NavLink>
-                </NavItem>
                 {isAuthenticated && (
-                  <NavItem>
-                    <NavLink tag={Link} className="text-dark" to="/logout">
-                      Logout
-                    </NavLink>
-                  </NavItem>
+                  <>
+                    <NavItem>
+                      <NavLink tag={Link} className="text-dark" to="/home">
+                        Home
+                      </NavLink>
+                    </NavItem>
+                    <NavItem>
+                      <NavLink
+                        tag={Link}
+                        className="text-dark"
+                        to="/fetch-data"
+                      >
+                        Fetch
+                      </NavLink>
+                    </NavItem>
+                    <NavItem>
+                      <NavLink tag={Link} className="text-dark" to="/create">
+                        Create
+                      </NavLink>
+                    </NavItem>
+                    <NavItem>
+                      <NavLink tag={Link} className="text-dark" to="/logout">
+                        Logout
+                      </NavLink>
+                    </NavItem>
+                    <NavItem>
+                      <NavLink tag={Link} className="text-dark" to="/chat">
+                        Chat
+                      </NavLink>
+                    </NavItem>
+                  </>
                 )}
               </ul>
             </Collapse>

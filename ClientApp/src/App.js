@@ -10,6 +10,7 @@ import Edit from "./components/Edit";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Chat from "./components/Chat";
 
 export default class App extends Component {
   static displayName = App.name;
@@ -26,6 +27,7 @@ export default class App extends Component {
             <ProtectedRoute path="/fetch-data" component={FetchData} />
             <ProtectedRoute path="/create" component={Create} />
             <ProtectedRoute path="/edit/:id" component={Edit} />
+            <ProtectedRoute path="/chat" component={Chat} />
           </Layout>
         </Switch>
       </>

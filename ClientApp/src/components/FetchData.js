@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useReducer } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import * as signalR from "@microsoft/signalr";
+import { employeeConnection } from "../hubConfig.js";
 
 export const FetchData = () => {
   const [employees, setemployees] = useState();
@@ -10,16 +10,10 @@ export const FetchData = () => {
 
   // Set Hub connection on start
   useEffect(() => {
-    // 1. Create SignalR connection
-    let connection = new signalR.HubConnectionBuilder()
-      .withUrl("/employeehub")
-      .withAutomaticReconnect()
-      .build();
-
-    // 2. Start the connection
-    connection.start().then(() => {
-      console.log("Connection Established...");
-      setConnectionid(connection.connection.connectionId);
+    // 1. Start the connection
+    employeeConnection.start().then(() => {
+      console.log("Employee Connection Established...");
+      setConnectionid(employeeConnection.connection.connectionId);
       axios
         .get("api/employees")
         .then((res) => {
@@ -33,8 +27,8 @@ export const FetchData = () => {
     });
 
     // 3. Listen to events
-    if (connection) {
-      connection.on("FetchLatestEmployees", () => {
+    if (employeeConnection) {
+      employeeConnection.on("FetchLatestEmployees", () => {
         setLoading(true);
         axios
           .get("api/employees")
@@ -50,8 +44,10 @@ export const FetchData = () => {
     }
 
     return () => {
-      if (connection) {
-        connection.stop().then(() => console.log("Connection stopped..."));
+      if (employeeConnection) {
+        employeeConnection
+          .stop()
+          .then(() => console.log("Employee Connection stopped..."));
       }
     };
   }, []);

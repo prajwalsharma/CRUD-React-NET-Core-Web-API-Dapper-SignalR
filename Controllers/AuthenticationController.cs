@@ -32,7 +32,7 @@ namespace CRUD_React_NET_Core_Web_API_Dapper_SignalR.Controllers
             // If valid user, generate a fake token for client auth
             var fakeToken = Guid.NewGuid().ToString();
 
-            return Ok(new { token = fakeToken });
+            return Ok(new { username = loginCredentials.Username,  token = fakeToken });
         }
 
         [Authorize]

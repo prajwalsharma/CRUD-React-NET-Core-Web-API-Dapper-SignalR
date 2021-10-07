@@ -72,6 +72,7 @@ namespace CRUD_React_NET_Core_Web_API_Dapper_SignalR
                     pattern: "{controller}/{action=Index}/{id?}");
 
                 endpoints.MapHub<EmployeeHub>("/employeehub");
+                endpoints.MapHub<ChatHub>("/chathub");
             });
 
             app.UseSpa(spa =>
